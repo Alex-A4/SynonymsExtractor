@@ -14,3 +14,6 @@ SynonymsExtractor.java contains methods to extract synonymic relationships from 
 connections between records on the basis of dictionary
 
 Package org.tartarus.snowball contains Porter's stemmer
+
+To exclude ability of inclusion synonyms from dictionary, comment conditional operator in
+ SynonymsExtractor.java in method findSynonymsToEachRecord(..)
