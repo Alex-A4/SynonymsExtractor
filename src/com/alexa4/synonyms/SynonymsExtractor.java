@@ -50,7 +50,6 @@ public class SynonymsExtractor {
 	 */
 	private static void readAndFindSynonyms(File dictionaryFile, Thesaurus thesaurus)
 			throws FileNotFoundException, IOException{
-		System.out.println("Extracting had been started");
 
 		ArrayList<Record> records = thesaurus.getRecords();
 
@@ -69,7 +68,7 @@ public class SynonymsExtractor {
 			findSynonymsToEachRecord(words, records);
 
 			//Need to see progress of work
-			if (numberOfLine % 1000 == 0)
+			if (numberOfLine % 50000 == 0)
 				System.out.println(numberOfLine);
 		}
 		System.out.println(numberOfLine);
@@ -86,7 +85,7 @@ public class SynonymsExtractor {
 		ArrayList<Record> recordsToSynonyms = new ArrayList<Record>();
 
 		for (int i = 0; i < records.size(); i++){
-			if (isContainsInSynonyms(words, records.get(i).getName())){
+			if (isContainsInSynonyms(words, records.get(i).getNameAfterStem())){
 				recordsToSynonyms.add(records.get(i));
 			}
 		}
@@ -105,9 +104,8 @@ public class SynonymsExtractor {
 	 * @return true if contains, false otherwise
 	 */
 	private static boolean isContainsInSynonyms(String[] words, String name){
-		String nameAfterStem = Stemmer.stemOneWord(name);
 		for(String word: words){
-			if (nameAfterStem.equals(word))
+			if (name.equals(word))
 			return true;
 		}
 		return false;
