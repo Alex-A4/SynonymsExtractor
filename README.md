@@ -11,4 +11,6 @@ DictionaryStemmer package contains static class Stemmer.java to stem words or li
 DictionaryStemmer.java uses to stem all lines from dictionary. Need just to make some tests
 
 SynonymsExtractor.java contains methods to extract synonymic relationships from dictionary and make new
-connections between records on the basis of dictionary 
+connections between records on the basis of dictionary
+
+Package org.tartarus.snowball contains Porter's stemmer
