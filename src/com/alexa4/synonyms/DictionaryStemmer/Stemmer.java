@@ -37,4 +37,16 @@ public final class Stemmer {
 		}
 		return words;
 	}
+
+	/**
+	 * Stem one word
+	 * @param word input word
+	 * @return word after stemming
+	 */
+	public static String stemOneWord(String word){
+		russianStemmer rs = new russianStemmer();
+		rs.setCurrent(word);
+		rs.stem();
+		return rs.getCurrent();
+	}
 }
