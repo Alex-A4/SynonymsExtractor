@@ -87,14 +87,14 @@ public class Record{
 	 * @return
 	 */
 	public String getSynonyms(){
-		return makeSynonyms();
+		return createSynonyms();
 	}
 
 	/**
-	 * Helper method which need to build line like "[synonym1, synonym2, ...]"
+	 * Helper method which need to build line like "[u'synonym1, u'synonym2, ...]"
 	 * @return
 	 */
-	private  String makeSynonyms(){
+	private  String createSynonyms(){
 		String line = "";
 
 		if (synonyms_names == null)
@@ -103,7 +103,7 @@ public class Record{
 			line = line.concat("[");
 			for (int i = 0; i < synonyms_names.size(); i++){
 				if (i == synonyms_names.size() - 1) line = line.concat(synonyms_names.get(i));
-				else line = line.concat(synonyms_names.get(i) + ", ");
+				else line = line.concat("u\'" + synonyms_names.get(i) + ", ");
 			}
 			line = line.concat("]");
 		}
