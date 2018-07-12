@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import org.tartarus.snowball.ext.russianStemmer;
 
 public class ThesaurusReader implements ThesaurusLines{
 	private static Scanner sc;
@@ -114,12 +113,7 @@ public class ThesaurusReader implements ThesaurusLines{
 	 * @return name of word
 	 */
 	private String getName(String name){
-		name = name.replace(NAME, "");
-		russianStemmer rs = new russianStemmer();
-		rs.setCurrent(name);
-		rs.stem();
-		name = rs.getCurrent();
-		return name;
+		return name.replace(NAME, "");
 	}
 
 	/**
@@ -140,7 +134,9 @@ public class ThesaurusReader implements ThesaurusLines{
 		for (int i = 0; i < words.length; i++){
 			words[ i ] = words[ i ].trim();
 
-			synonms.add(words[i]);
+			words[ i ] = words[ i ].replace("u\'", "");
+
+			synonms.add(words[ i ]);
 		}
 		return synonms;
 	}
