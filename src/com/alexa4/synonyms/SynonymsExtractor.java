@@ -42,8 +42,9 @@ public class SynonymsExtractor {
 	/**
 	 * 1) Reading every line from dictionary
 	 * 2) For each record from thesaurus trying to find synonyms in this line
-	 * 3) If it have found, and it count more than 1, then create new connection
+	 * 3.1) If they have found, and their count more than 1, then create new connection
 	 *      between all suitable records, if it have not created
+	 * 3.2) If record's name was stand at first position in dictionary's line, then add all synonyms to record
 	 * @param dictionaryFile to read
 	 * @throws FileNotFoundException
 	 * @throws IOException
@@ -62,10 +63,12 @@ public class SynonymsExtractor {
 
 			//Read line from dictionary
 			String lineFromDict = scanner.nextLine();
-			//Array of synonyms from dictionary
+			//Array of synonyms from dictionary after stemming
 			String[] words = Stemmer.stemNotParsedText(lineFromDict, "[|]+");
+			//Array of synonyms from dictionary without stemming
+			String[] fullWords = lineFromDict.split("[|]+");
 
-			findSynonymsToEachRecord(words, records);
+			findSynonymsToEachRecord(words, records, fullWords);
 
 			//Need to see progress of work
 			if (numberOfLine % 50000 == 0)
@@ -77,17 +80,28 @@ public class SynonymsExtractor {
 	/**
 	 * Finding synonyms from one line for each record
 	 * If there were found more than 1 record then they connect with each other
+	 * Also adds synonyms from dictionary if record's name stand at first position in dictionary's line
 	 * @param words array of words from one line from dictionary
 	 * @param records list of thesaurus records
 	 */
-	private static void findSynonymsToEachRecord(String[] words, ArrayList<Record> records){
+	private static void findSynonymsToEachRecord(String[] words, ArrayList<Record> records, String[] fullWords){
 		//Each suitable record will add to that list
 		ArrayList<Record> recordsToSynonyms = new ArrayList<Record>();
 
 		for (int i = 0; i < records.size(); i++){
+			//Add record to recordsToSynonyms if it contains into words[]
 			if (isContainsInSynonyms(words, records.get(i).getNameAfterStem())){
 				recordsToSynonyms.add(records.get(i));
 			}
+
+			/**
+			 * If you don't want to add synonyms from dictionary, then comment conditional operator below
+			 */
+			//Add synonyms from fullWords[] to record if record.name stand at 0 position in words[]
+			if (words.length != 0)
+				if (records.get(i).getNameAfterStem().equals(words[0])){
+					addSynonymsIfAtFirstPlace(records.get(i), fullWords);
+				}
 		}
 
 		if (recordsToSynonyms.size() > 1){
@@ -96,9 +110,22 @@ public class SynonymsExtractor {
 
 	}
 
+	/**
+	 * If record.name was stand at first place in dictionary then add synonyms from this line to record
+	 * if they not contains in record's synonyms
+	 * @param record which name was stand at first place in dictionary
+	 * @param fullWords array of words without stemming
+	 */
+	private static void addSynonymsIfAtFirstPlace(Record record, String[] fullWords){
+		for (String word: fullWords){
+			if (!isSynonymContainsInRecord(word, record))
+				record.addSynonym(word);
+		}
+	}
+
 
 	/**
-	 * Check does record name contains in @param words
+	 * Check does record's name contains in @param words
 	 * @param words array of synonyms
 	 * @param name of record
 	 * @return true if contains, false otherwise
@@ -134,7 +161,7 @@ public class SynonymsExtractor {
 
 
 	/**
-	 * Check does @param synonym word contains in record synonyms
+	 * Check does @param synonym word contains in record's synonyms
 	 * @param synonym which need compare to record synonyms
 	 * @param record where need find @param synonym
 	 * @return true if contains, false otherwise
