@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Record{
 	private String id;
 	private String name;
+	private String nameAfterStem;
 	private String associates;
 	private String hypos;
 	private String hypers;
@@ -23,9 +24,10 @@ public class Record{
 	 * @param hypers
 	 * @param synonyms_names
 	 */
-	Record(String id, String name, String associates, String hypos, String hypers, ArrayList<String> synonyms_names){
+	Record(String id, String name, String nameAfterStem, String associates, String hypos, String hypers, ArrayList<String> synonyms_names){
 		this.id = id;
 		this.name = name;
+		this.nameAfterStem = nameAfterStem;
 		this.associates = associates;
 		this.hypos = hypos;
 		this.hypers = hypers;
@@ -56,6 +58,14 @@ public class Record{
 	 */
 	public String getName(){
 		return name;
+	}
+
+	/**
+	 * Returns the nameAfterStem of this record
+	 * @return
+	 */
+	public String getNameAfterStem(){
+		return nameAfterStem;
 	}
 
 	/**
