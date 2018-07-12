@@ -1,5 +1,6 @@
 package com.alexa4.synonyms.Thesaurus;
 
+import com.alexa4.synonyms.DictionaryStemmer.Stemmer;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -65,6 +66,7 @@ public class ThesaurusReader implements ThesaurusLines{
 	 */
 	public void readAllRecords(){
 		String line;
+
 		while(sc.hasNextLine()){
 			line = sc.nextLine();
 			if (line.contains("*NEWRECORD")){
@@ -77,6 +79,7 @@ public class ThesaurusReader implements ThesaurusLines{
 				thesaurus.addRecord(makeNewRecord(id, name, associates, hypos, hypers, synonyms));
 			}
 		}
+		System.out.println("Reading had been finished");
 	}
 
 	/**
@@ -94,8 +97,9 @@ public class ThesaurusReader implements ThesaurusLines{
 
 		id = getId(id);
 		name = getName(name);
+		String nameAfterStem = Stemmer.stemOneWord(name);
 		ArrayList<String> synons = getSynonyms(synonyms);
-		return new Record(id, name, associates, hypos, hypers, synons);
+		return new Record(id, name, nameAfterStem, associates, hypos, hypers, synons);
 	}
 
 	/**
@@ -113,7 +117,8 @@ public class ThesaurusReader implements ThesaurusLines{
 	 * @return name of word
 	 */
 	private String getName(String name){
-		return name.replace(NAME, "");
+		name.replace(NAME, "");
+		return name;
 	}
 
 	/**
