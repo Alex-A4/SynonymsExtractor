@@ -14,26 +14,27 @@ import java.util.Scanner;
  */
 public class SynonymsExtractor {
 
-
 	/**
 	 * Find a synonyms in dictionary with standard file way and add it to thesaurus
+	 * Will add synonyms if word stand in any position into dictionary's line
 	 * @param thesaurus thesaurus with records
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public static void findSynonyms(Thesaurus thesaurus) throws FileNotFoundException, IOException{
+	public static void findSynonymsFromWholeDictionary(Thesaurus thesaurus) throws FileNotFoundException, IOException{
 		File dictionaryFile = createDictFile();
 		readAndFindSynonyms(dictionaryFile, thesaurus);
 	}
 
 	/**
 	 * Find a synonyms in dictionary with input file way and add it to thesaurus
+	 * Will add synonyms if word stand in any position into dictionary's line
 	 * @param thesaurus thesaurus with records
 	 * @param fullFilePath full file way
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public static void findSynonyms(Thesaurus thesaurus, String fullFilePath) throws FileNotFoundException, IOException{
+	public static void findSynonymsFromWholeDictionary(Thesaurus thesaurus, String fullFilePath) throws FileNotFoundException, IOException{
 		File dictionaryFile = createDictFile(fullFilePath);
 		readAndFindSynonyms(dictionaryFile, thesaurus);
 	}
