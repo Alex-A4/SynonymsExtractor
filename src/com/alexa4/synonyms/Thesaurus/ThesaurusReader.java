@@ -117,8 +117,7 @@ public class ThesaurusReader implements ThesaurusLines{
 	 * @return name of word
 	 */
 	private String getName(String name){
-		name.replace(NAME, "");
-		return name;
+		return name.replace(NAME, "");
 	}
 
 	/**
