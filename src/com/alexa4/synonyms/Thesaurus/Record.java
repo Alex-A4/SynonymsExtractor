@@ -112,8 +112,8 @@ public class Record{
 		else{
 			line = line.concat("[");
 			for (int i = 0; i < synonyms_names.size(); i++){
-				if (i == synonyms_names.size() - 1) line = line.concat("u\'" + synonyms_names.get(i));
-				else line = line.concat("u\'" + synonyms_names.get(i) + ", ");
+				if (i == synonyms_names.size() - 1) line = line.concat("u\'" + synonyms_names.get(i) + "\'");
+				else line = line.concat("u\'" + synonyms_names.get(i) + "\', ");
 			}
 			line = line.concat("]");
 		}
