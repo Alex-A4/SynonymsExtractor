@@ -7,11 +7,11 @@ public class MainClass {
 	public static void main(String[] args){
 		try {
 			Thesaurus thesaurus = new Thesaurus();
-			thesaurus.readThesaurus();
+			thesaurus.readThesaurus("/home/alexa4/Java-Projects/Projects/Synonyms/res/newThesaruses/tweets_auto_thesaurus_lsa_word2vec_lev_RT_syn_hyp-parts_RT_hyp");
 
-			SynonymsExtractor.findSynonyms(thesaurus);
+			SynonymsExtractor.findSynonymsFromWholeDictionary(thesaurus);
 
-			thesaurus.writeThesaurus();
+			thesaurus.writeThesaurus("/home/alexa4/Java-Projects/Projects/Synonyms/res/newThesaruses/tweets_auto_thesaurus_lsa_word2vec_lev_RT_syn_hyp-parts_RT_hyp_result");
 		} catch (IOException e){
 			e.printStackTrace();
 		}
